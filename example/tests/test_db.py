@@ -9,32 +9,42 @@ from example.purchases.models import Purchase
 class WidgetTests(TestCase):
 
     def setUp(self):
-        basic_obj = Widget(name='testwidget',
+        basic_obj = Widget(title='testwidget',
                            color='Black',
                            size='Small',
                            shape='Rectangle')
         basic_obj.save()
-        dummy_obj = Widget(name='dummywidget',
+        dummy_obj = Widget(title='dummywidget',
                            color='Green',
                            size='Medium',
                            shape='Ellipse')
         dummy_obj.save()
 
     def test_get_name(self):
-        obj = Widget.objects.get(name='testwidget')
-        self.assertEqual(obj.name, 'testwidget')
-        self.assertEqual(str(obj), 'testwidget')
+        obj = Widget.search('testwidget').first()
+        self.assertEqual(obj.title, 'testwidget')
+        self.assertEqual(str(obj), '<Widget testwidget>')
 
+    def test_archive(self):
+        obj = Widget.search('testwidget').first()
+        
+        obj.delete()
+        self.assertEqual(str(obj), '(archived) <Widget testwidget>')
+        self.assertEqual(obj.archived_at, Widget.search('testwidget').first().archived_at)
+
+        obj.restore()
+        self.assertEqual(str(obj), '<Widget testwidget>')
+        self.assertEqual(None, Widget.search('testwidget').first().archived_at)
 
 class PurchaseTests(TestCase):
 
     def setUp(self):
-        widg1 = Widget(name='testwidget',
+        widg1 = Widget(title='testwidget',
                        color='Black',
                        size='Small',
                        shape='Rectangle')
         widg1.save()
-        widg2 = Widget(name='dummywidget',
+        widg2 = Widget(title='dummywidget',
                        color='Green',
                        size='Medium',
                        shape='Ellipse')

@@ -17,7 +17,7 @@ class UniqueNamedModelBase(NamedModelBase):
     class Meta:
         abstract = True
 
-class TitledModel(NamedModelBase):
+class TitleModel(NamedModelBase):
     title = models.CharField(max_length=255, null=True, blank=True)
     setattr(title, '_search', True)
     

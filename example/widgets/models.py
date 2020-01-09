@@ -1,9 +1,8 @@
 from django.db import models
 from .options import COLORS, SIZES, SHAPES
+from EasyModels import TitleModel, ArchivableModel
 
-
-class Widget(models.Model):
-    name = models.CharField(max_length=30, blank=True)
+class Widget(ArchivableModel, TitleModel):
     color = models.CharField(choices=COLORS, max_length=30)
     size = models.CharField(choices=SIZES, max_length=30)
     shape = models.CharField(choices=SHAPES, max_length=30)
@@ -11,8 +10,8 @@ class Widget(models.Model):
                              blank=True)
 
     def save(self, *args, **kwargs):
-        if self.name == '':
-            self.name = '%s.%s.%s' % (self.color, self.size, self.shape)
+        if self.title == '':
+            self.title = '%s.%s.%s' % (self.color, self.size, self.shape)
 
         color_sum = sum([ord(x) for x in self.color])
         size_sum = sum([ord(x) for x in self.size])
@@ -20,5 +19,3 @@ class Widget(models.Model):
         self.cost = color_sum + size_sum + shape_sum
         super(Widget, self).save(*args, **kwargs)
 
-    def __str__(self):
-        return self.name

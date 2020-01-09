@@ -4,7 +4,8 @@ from django.db import models
 import collections
 
 """
-EasyLookupBase provides common methods for doing
+EasyLookupBase is a shared entrypoint for adding queryset methods
+to models and querysets and managers all at once
 """
 class EasyLookupBase(object):
     @classmethod
