@@ -3,3 +3,6 @@ db.sqlite3
 __pycache__
 *.pyc
 env
+build
+dist
+*.egg-info
