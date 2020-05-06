@@ -27,6 +27,16 @@ class TitleModel(NamedModelBase):
     class Meta:
         abstract = True
 
+class UniqueStubModel(UniqueNamedModelBase):
+    stub = models.CharField(max_length=255, unique=True)
+    setattr(stub, '_search', True)
+    
+    def get_display_name_field(self):
+        return 'stub'
+
+    class Meta:
+        abstract = True
+
 class UniqueTitleModel(UniqueNamedModelBase):
     title = models.CharField(max_length=255, unique=True)
     setattr(title, '_search', True)
