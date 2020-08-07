@@ -4,7 +4,7 @@ import sys  # pragma: nocover
 import subprocess  # pragma: nocover
 import platform  # pragma: nocover
 
-VERSION = (4, 0, 0, "beta", 2)
+VERSION = (4, 0, 0, "beta", 3)
 
 def get_git_changeset():  # pragma: nocover
     """Returns a numeric identifier of the latest git changeset.
