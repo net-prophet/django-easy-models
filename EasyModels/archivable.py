@@ -1,8 +1,10 @@
 from .base import EasyModel, models
+from django_filters import BooleanFilter
 from django.utils import timezone
 
 class ArchivableModel(EasyModel):
     archived_at = models.DateTimeField(null=True, blank=True, db_index=True)
+
     class Meta:
         abstract = True
 
@@ -35,3 +37,22 @@ class ArchivableModel(EasyModel):
 
     def restore(self, commit=True):
         return self.set_unarchived(commit)
+        
+    # API Actions
+    @classmethod
+    def archive(cls, instance, **data):
+        return instance.set_archived()
+
+    @classmethod
+    def unarchive(cls, instance, **data):
+        return instance.set_unarchived()
+
+    # These are usually set with the easy-api @APIAction decorator but we dont want to depend on it
+    setattr(archive, '_APIAction', {'detail': True, 'many': False, 'read_only': False})
+    setattr(unarchive, '_APIAction', {'detail': True, 'many': False, 'read_only': False})
+
+    # API Filters
+    unarchived = BooleanFilter(field_name='archived_at', lookup_expr='isnull')
+    archived = BooleanFilter(field_name='archived_at', lookup_expr='isnull', exclude=True)
+
+    
