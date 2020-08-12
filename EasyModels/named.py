@@ -27,12 +27,12 @@ class TitleModel(NamedModelBase):
     class Meta:
         abstract = True
 
-class UniqueStubModel(UniqueNamedModelBase):
-    stub = models.CharField(max_length=255, unique=True)
-    setattr(stub, '_search', True)
+class UniqueSlugModel(UniqueNamedModelBase):
+    slug = models.CharField(max_length=255, unique=True)
+    setattr(slug, '_search', True)
     
     def get_display_name_field(self):
-        return 'stub'
+        return 'slug'
 
     class Meta:
         abstract = True
