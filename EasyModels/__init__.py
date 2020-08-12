@@ -5,7 +5,7 @@ from .common import (
 )
 
 from .named import (
-    TitleModel, UniqueTitleModel, FullNameModel, UniqueFullNameModel, UniqueStubModel
+    TitleModel, UniqueTitleModel, FullNameModel, UniqueFullNameModel, UniqueSlugModel
 )
 
 from .archivable import ArchivableModel
